@@ -4,9 +4,6 @@ var webpack = require('webpack');
 var config = {
   context: path.join(__dirname, 'src'),
   entry: [
-    'react-hot-loader/patch',
-    'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-    'webpack/hot/only-dev-server',
     './main.js',
   ],
   output: {
@@ -19,7 +16,7 @@ var config = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: ['react-hot-loader/webpack', 'babel-loader'],
+        loaders: ['babel-loader'],
       },
     ],
   },
@@ -31,7 +28,11 @@ var config = {
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: false,
+      mangle: false
+    })
   ],
 };
 module.exports = config;

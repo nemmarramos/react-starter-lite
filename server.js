@@ -1,27 +1,29 @@
 var express = require('express');
-var webpackDevMiddleware = require('webpack-dev-middleware');
-var webpackHotMiddleware = require("webpack-hot-middleware");
-var webpack = require('webpack');
-var webpackConfig = require('./webpack.config.js');
 var app = express();
 
-var compiler = webpack(webpackConfig);
+if(process.env.NODE_ENV == "development") {
+  const webpack = require('webpack');
+  const webpackConfig = require('./webpack.config.js');
+  const webpackDevMiddleware = require('webpack-dev-middleware');
+  const webpackHotMiddleware = require("webpack-hot-middleware");
+  const compiler = webpack(webpackConfig);
 
-app.use(webpackDevMiddleware(compiler, {
-  hot: true,
-  filename: 'bundle.js',
-  publicPath: '/',
-  stats: {
-    colors: true,
-  },
-  historyApiFallback: true,
-}));
+  app.use(webpackDevMiddleware(compiler, {
+    hot: true,
+    filename: 'bundle.js',
+    publicPath: '/',
+    stats: {
+      colors: true,
+    },
+    historyApiFallback: true,
+  }));
 
-app.use(webpackHotMiddleware(compiler, {
-  log: console.log,
-  path: '/__webpack_hmr',
-  heartbeat: 10 * 1000,
-}));
+  app.use(webpackHotMiddleware(compiler, {
+    log: console.log,
+    path: '/__webpack_hmr',
+    heartbeat: 10 * 2000,
+  }));
+}
 
 app.use(express.static(__dirname + '/www'));
 
