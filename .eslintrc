@@ -10,6 +10,7 @@
     "rules": {
         "indent": [ 2, 4 ],
         "comma-dangle": 0,
+        "global-require": 0,
 
         // strings
         "quotes": [ 2, "double", "avoid-escape" ],

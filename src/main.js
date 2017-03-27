@@ -14,5 +14,7 @@ const render = (Container) => {
 render(Root);
 
 if (module.hot) {
-    module.hot.accept("./containers/Root", () => { render(Root); });
+    module.hot.accept("./containers/Root", () => {
+        render(require("./containers/Root").default);
+    });
 }
